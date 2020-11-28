@@ -1,7 +1,7 @@
 const mongo = require('mongodb');
-
 const client = new mongo.MongoClient('mongodb://localhost:27017', {useUnifiedTopology: true});
 
+const addinput = document.getElementById("addinput").value;
 //Funkcja dodania użytkownika
 function addNewTodo(todosCollection, nr_id, name, username, date_add, user) {
     todosCollection.insertOne({
