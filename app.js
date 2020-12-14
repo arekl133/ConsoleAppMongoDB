@@ -1,7 +1,6 @@
 const mongo = require('mongodb');
 const client = new mongo.MongoClient('mongodb://localhost:27017', {useUnifiedTopology: true});
 
-const addinput = document.getElementById("addinput").value;
 //Funkcja dodania użytkownika
 function addNewTodo(todosCollection, nr_id, name, username, date_add, user) {
     todosCollection.insertOne({
@@ -20,6 +19,7 @@ function addNewTodo(todosCollection, nr_id, name, username, date_add, user) {
         client.close();
     });
 }
+
 //Funkcja wyswietlenia wszystkich użytkowników
 function showAllTodos(todosCollection) {
     todosCollection.find({}).toArray((err, todos) => {
@@ -67,19 +67,7 @@ function deleteTask(todosCollection, id) {
     });
 }
 
-// function deleteAllDoneTasks(todosCollection) {
-//     todosCollection.deleteMany({
-//         done: true,
-//     }, err => {
-//         if (err) {
-//             console.log('Błąd podczas usuwania!', err);
-//         } else {
-//             console.log('Usunieto');
-//         }
 
-//         client.close();
-//     });
-// }
 
 function doTheToDo(todosCollection) {
     const [command, ...args] = process.argv.splice(2);
@@ -91,18 +79,12 @@ function doTheToDo(todosCollection) {
         case 'list':
             showAllTodos(todosCollection);
             break;
-        // case 'done':
-        //     markTaskAsDone(todosCollection, args[0]);
-        //     break;
         case 'delete':
             deleteTask(todosCollection, args[0]);
             break;
-        // case 'cleanup':
-        //     deleteAllDoneTasks(todosCollection);
-        //     break;
         default:
             console.log(`
-#### Lista TO DO - MongoDB z Samurajem Programowania ####
+
 
 Dostępne komendy:
 
@@ -110,8 +92,8 @@ add <nr_id>, <name>, <username>, <date_add> - dodaje użytkownika
 list - wyświetla wszystkich użytkowników
 done <id zadania> - oznacz wybrane zadanie jako zakończone
 delete <id zadania> - usuń wybranego użytkownika
-cleanup - usuń zakończone zadania, jeżeli istnieją
-`);
+cleanup - usuń zakończone zadania, jeżeli istnieją`
+);
             client.close();
             break;
     }
